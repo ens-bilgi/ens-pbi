@@ -148,9 +148,11 @@ uv run python scripts/deploy.py \
   --spn-auth
 ```
 
-### Option B: Git Sync
+### Option B: Git Sync (requires paid Fabric capacity)
 
 Connect your Fabric workspace to this repo via Fabric Git integration (see Step 8 in `docs/azure-setup.md`). Then any commit/push to the configured branch auto-deploys.
+
+**Note:** Fabric Git integration with GitHub requires a paid Fabric capacity (F2 SKU or higher). On a Fabric trial, only Azure DevOps is available for Git sync. Use Option A (`deploy.py`) if you're on a trial and want to keep your code in GitHub.
 
 ## Azure Setup
 

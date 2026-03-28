@@ -87,13 +87,15 @@ Option A — **fabric-cicd** (API deployment):
 uv run python scripts/deploy.py --project projects/<name> --workspace <workspace-id>
 ```
 
-Option B — **Git integration** (commit-based deployment):
+Option B — **Git integration** (commit-based deployment, requires paid Fabric capacity):
 ```bash
 git add projects/<name>
 git commit -m "Add <name> report"
 git push
 # Fabric Git sync picks up changes automatically
 ```
+
+**Note:** GitHub Git sync requires paid Fabric capacity (F2+). On a trial, use Option A. See `docs/azure-setup.md` Step 8 for details.
 
 ## Available MCP Servers
 

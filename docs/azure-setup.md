@@ -98,15 +98,47 @@ For each Power BI workspace you want Claude to access:
 
 ## Step 8: Set Up Fabric Git Integration (Optional)
 
-If you want commits to this repo to auto-deploy to Power BI:
+Fabric Git integration lets commits to your repo auto-deploy to Power BI. **This is optional** — you can always deploy via `scripts/deploy.py` instead.
+
+### Requirements
+
+- **Paid Fabric capacity (F2 SKU or higher)** — Git integration is not available on Fabric trial capacities
+- Two tenant admin settings must be enabled:
+  1. "Users can synchronize workspace items with their Git repositories"
+  2. "Users can synchronize workspace items with GitHub repositories" (separate toggle for GitHub)
+- Workspace admin role
+
+### GitHub vs Azure DevOps
+
+| Provider | Capacity Required | Commit Size Limit |
+|---|---|---|
+| **GitHub** | Paid (F2+) | 50 MB per commit |
+| **Azure DevOps** | Paid (F2+) or trial | 125 MB per commit |
+
+If you're on a **Fabric trial**, only Azure DevOps will appear as an option. GitHub requires paid capacity. If you prefer GitHub (recommended), use `scripts/deploy.py` for deployment until you're on paid capacity.
+
+### Setup (when on paid capacity)
 
 1. Open your workspace in Power BI Service
 2. Click **Workspace settings** > **Git integration**
-3. Connect to your GitHub or Azure DevOps repo
-4. Select the branch and folder to sync
-5. Power BI will sync PBIP content from the repo to the workspace
+3. Select **GitHub** as the provider
+4. Click **Add account** and provide:
+   - A display name
+   - A GitHub **personal access token** (fine-grained with Contents read/write, or classic with `repo` scope)
+5. Select the repository, branch, and folder to sync
+6. Click **Connect and sync**
+
+Power BI will sync PBIP content from the repo to the workspace on each commit.
 
 See [Fabric Git integration docs](https://learn.microsoft.com/en-us/fabric/cicd/git-integration/intro-to-git-integration) for details.
+
+### If You're on a Trial
+
+Use `scripts/deploy.py` to deploy PBIP projects via the REST API — this works on any capacity including trial:
+
+```bash
+uv run python scripts/deploy.py --project projects/<name> --workspace-id <id>
+```
 
 ## Troubleshooting
 
