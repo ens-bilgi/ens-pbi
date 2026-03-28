@@ -1,0 +1,37 @@
+{
+  "name": "power-bi-agentic-development",
+  "owner": {
+    "name": "Kurt Buhler"
+  },
+  "metadata": {
+    "description": "A marketplace for skills and tools for agentic Power BI development.",
+    "version": "0.9.3"
+  },
+  "plugins": [
+    {
+      "name": "tabular-editor",
+      "description": "Agentic development tools for Power BI semantic models with Tabular Editor.",
+      "source": "./plugins/tabular-editor"
+    },
+    {
+      "name": "pbi-desktop",
+      "description": "Connect to Power BI Desktop's local Analysis Services instance to enumerate models, query with DAX, refresh data, and modify metadata via TOM. No MCP server required.",
+      "source": "./plugins/pbi-desktop"
+    },
+    {
+      "name": "pbip",
+      "description": "Skills for working with Power BI Project (PBIP) files including TMDL authoring and project operations.",
+      "source": "./plugins/pbip"
+    },
+    {
+      "name": "semantic-models",
+      "description": "Skills for auditing and standardizing naming conventions in Power BI semantic models.",
+      "source": "./plugins/semantic-models"
+    },
+    {
+      "name": "reports",
+      "description": "Skills for Power BI report design and custom visuals (Deneb, R, Python, SVG).",
+      "source": "./plugins/reports"
+    }
+  ]
+}

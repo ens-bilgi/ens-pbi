@@ -1,0 +1,22 @@
+[project]
+name = "ens-pbi"
+version = "0.1.0"
+description = "Power BI + Fabric integration for Claude Code — dataflows, semantic models, and reports"
+requires-python = ">=3.10"
+dependencies = [
+    "fabric-cicd>=0.1.0",
+    "powerbpy>=0.1.0",
+    "pbir-utils>=0.1.0",
+    "azure-identity>=1.15.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -1,0 +1,30 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node
+node_modules/
+
+# Python
+tests/__pycache__/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Logs
+*.log
+
+# Local config
+.env
+.env.local
+
+# Eval test results — individual per-skill detail files
+# Only the merged summary (eval-results.md) and regression_analysis.md are tracked
+tests/full-eval-tests/result/eval-*-results.md
+
