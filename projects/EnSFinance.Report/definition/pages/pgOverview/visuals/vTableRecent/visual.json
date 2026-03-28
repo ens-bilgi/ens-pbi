@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vTableRecent",
+  "position": {
+    "x": 790,
+    "y": 180,
+    "z": 2001,
+    "width": 460,
+    "height": 350,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": { "Entity": "Vendor" }
+                  },
+                  "Property": "VendorName"
+                }
+              },
+              "queryRef": "Vendor.VendorName",
+              "nativeQueryRef": "VendorName"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": { "Entity": "Bill" }
+                  },
+                  "Property": "Total Bills TRY"
+                }
+              },
+              "queryRef": "Bill.Total Bills TRY",
+              "nativeQueryRef": "Total Bills TRY"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": { "Entity": "Bill" }
+                  },
+                  "Property": "Outstanding Bills"
+                }
+              },
+              "queryRef": "Bill.Outstanding Bills",
+              "nativeQueryRef": "Outstanding Bills"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": { "expr": { "Literal": { "Value": "true" } } },
+            "text": { "expr": { "Literal": { "Value": "'Bills by Vendor'" } } }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,30 @@
+table 'Payment Method'
+	lineageTag: d0000005-0000-0000-0000-000000000001
+
+	column PaymentMethodKey
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: d0000005-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: PaymentMethodKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentMethod
+		dataType: string
+		lineageTag: d0000005-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: PaymentMethod
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Payment Method' = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="payment_method"]}[Data]
+				in
+				    Data

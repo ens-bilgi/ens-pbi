@@ -1,0 +1,47 @@
+table User
+	lineageTag: d0000007-0000-0000-0000-000000000001
+
+	column UserKey
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: d0000007-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: UserKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column UserId
+		dataType: string
+		isHidden
+		lineageTag: d0000007-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: UserId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: d0000007-0003-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullName
+		dataType: string
+		lineageTag: d0000007-0004-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: FullName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition User = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="user"]}[Data]
+				in
+				    Data

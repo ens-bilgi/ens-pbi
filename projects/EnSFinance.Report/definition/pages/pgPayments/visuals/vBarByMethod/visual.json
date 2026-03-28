@@ -1,0 +1,26 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vBarByMethod",
+  "position": { "x": 30, "y": 30, "z": 1000, "width": 600, "height": 400, "tabOrder": 0 },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Payment Method" } }, "Property": "PaymentMethod" } }, "queryRef": "Payment Method.PaymentMethod", "nativeQueryRef": "PaymentMethod" }
+          ]
+        },
+        "Y": {
+          "projections": [
+            { "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "Payment" } }, "Property": "Total Outgoing" } }, "queryRef": "Payment.Total Outgoing", "nativeQueryRef": "Total Outgoing" }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "text": { "expr": { "Literal": { "Value": "'Payments by Method'" } } } } }]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

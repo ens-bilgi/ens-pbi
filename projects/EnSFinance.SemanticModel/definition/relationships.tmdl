@@ -1,0 +1,43 @@
+relationship r0000001-0000-0000-0000-000000000001
+	fromColumn: Bill.DateKey
+	toColumn: Date.DateKey
+
+relationship r0000002-0000-0000-0000-000000000001
+	fromColumn: Invoice.DateKey
+	toColumn: Date.DateKey
+
+relationship r0000003-0000-0000-0000-000000000001
+	fromColumn: Payment.DateKey
+	toColumn: Date.DateKey
+
+relationship r0000005-0000-0000-0000-000000000001
+	fromColumn: Bill.VendorKey
+	toColumn: Vendor.VendorKey
+
+relationship r0000007-0000-0000-0000-000000000001
+	fromColumn: Invoice.ClientKey
+	toColumn: Client.ClientKey
+
+relationship r0000008-0000-0000-0000-000000000001
+	fromColumn: Bill.CurrencyKey
+	toColumn: Currency.CurrencyKey
+
+relationship r0000009-0000-0000-0000-000000000001
+	fromColumn: Invoice.CurrencyKey
+	toColumn: Currency.CurrencyKey
+
+relationship r000000a-0000-0000-0000-000000000001
+	fromColumn: Payment.CurrencyKey
+	toColumn: Currency.CurrencyKey
+
+relationship r000000c-0000-0000-0000-000000000001
+	fromColumn: Payment.PaymentMethodKey
+	toColumn: 'Payment Method'.PaymentMethodKey
+
+relationship r000000e-0000-0000-0000-000000000001
+	fromColumn: Bill.StatusKey
+	toColumn: 'Transaction Status'.StatusKey
+
+relationship r000000f-0000-0000-0000-000000000001
+	fromColumn: Invoice.StatusKey
+	toColumn: 'Transaction Status'.StatusKey

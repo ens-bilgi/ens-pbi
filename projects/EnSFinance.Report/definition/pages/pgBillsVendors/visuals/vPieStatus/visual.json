@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vPieStatus",
+  "position": { "x": 650, "y": 30, "z": 1001, "width": 580, "height": 400, "tabOrder": 1 },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Transaction Status" } }, "Property": "StatusName" } },
+              "queryRef": "Transaction Status.StatusName", "nativeQueryRef": "StatusName"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "Bill" } }, "Property": "Total Bills" } },
+              "queryRef": "Bill.Total Bills", "nativeQueryRef": "Total Bills"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "text": { "expr": { "Literal": { "Value": "'Bills by Status'" } } } } }]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

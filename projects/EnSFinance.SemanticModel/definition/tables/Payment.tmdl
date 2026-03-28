@@ -1,0 +1,164 @@
+table Payment
+	lineageTag: f0000003-0000-0000-0000-000000000001
+
+	column PaymentId
+		dataType: string
+		isHidden
+		isKey
+		lineageTag: f0000003-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: PaymentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000003-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentMethodKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000003-0003-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: PaymentMethodKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrencyKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000003-0004-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CurrencyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: f0000003-0005-0000-0000-000000000001
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Direction
+		dataType: string
+		lineageTag: f0000003-0006-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: Direction
+
+		annotation SummarizationSetBy = Automatic
+
+	column BillId
+		dataType: string
+		isHidden
+		lineageTag: f0000003-0007-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: BillId
+
+		annotation SummarizationSetBy = Automatic
+
+	column InvoiceId
+		dataType: string
+		isHidden
+		lineageTag: f0000003-0008-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: InvoiceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReceiptId
+		dataType: string
+		isHidden
+		lineageTag: f0000003-0009-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: ReceiptId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		isHidden
+		lineageTag: f0000003-000a-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		isHidden
+		lineageTag: f0000003-000b-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Total outgoing payments in original currency
+	measure 'Total Outgoing' =
+			CALCULATE (
+				SUM ( Payment[Amount] ),
+				Payment[Direction] = "outgoing"
+			)
+		formatString: #,##0.00
+		displayFolder: Payments
+		lineageTag: f0000003-0m01-0000-0000-000000000001
+
+	/// Total incoming payments in original currency
+	measure 'Total Incoming' =
+			CALCULATE (
+				SUM ( Payment[Amount] ),
+				Payment[Direction] = "incoming"
+			)
+		formatString: #,##0.00
+		displayFolder: Payments
+		lineageTag: f0000003-0m02-0000-0000-000000000001
+
+	/// Net cash flow (incoming - outgoing)
+	measure 'Net Cash Flow' =
+			[Total Incoming] - [Total Outgoing]
+		formatString: #,##0.00
+		displayFolder: Payments
+		lineageTag: f0000003-0m03-0000-0000-000000000001
+
+	/// Total outgoing converted to TRY
+	measure 'Total Outgoing TRY' =
+			CALCULATE (
+				SUMX (
+					Payment,
+					Payment[Amount] *
+					LOOKUPVALUE (
+						'Exchange Rate'[forex_selling],
+						'Exchange Rate'[base_currency], RELATED ( Currency[CurrencyCode] ),
+						'Exchange Rate'[date], RELATED ( 'Date'[Date] ),
+						1
+					)
+				),
+				Payment[Direction] = "outgoing"
+			)
+		formatString: ₺#,##0.00
+		displayFolder: Payments
+		lineageTag: f0000003-0m04-0000-0000-000000000001
+
+	/// Payment coverage: outgoing payments / total bills
+	measure 'Payment Coverage %' =
+			DIVIDE ( [Total Outgoing TRY], [Total Bills TRY] )
+		formatString: 0.0%
+		displayFolder: Payments
+		lineageTag: f0000003-0m05-0000-0000-000000000001
+
+	partition Payment = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="payment"]}[Data]
+				in
+				    Data

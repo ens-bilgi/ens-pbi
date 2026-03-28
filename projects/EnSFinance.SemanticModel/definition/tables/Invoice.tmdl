@@ -1,0 +1,153 @@
+table Invoice
+	lineageTag: f0000002-0000-0000-0000-000000000001
+
+	column InvoiceId
+		dataType: string
+		isHidden
+		isKey
+		lineageTag: f0000002-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: InvoiceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000002-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DueDateKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000002-0003-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: DueDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000002-0004-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: ClientKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrencyKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000002-0005-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CurrencyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000002-0006-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: StatusKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column InvoiceNumber
+		dataType: string
+		lineageTag: f0000002-0007-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: InvoiceNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: f0000002-0008-0000-0000-000000000001
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column VATRate
+		dataType: double
+		formatString: 0.00%
+		lineageTag: f0000002-0009-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: VATRate
+
+		annotation SummarizationSetBy = Automatic
+
+	column VATAmount
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: f0000002-000a-0000-0000-000000000001
+		summarizeBy: sum
+		sourceColumn: VATAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		isHidden
+		lineageTag: f0000002-000b-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		isHidden
+		lineageTag: f0000002-000c-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Total invoice amount in original currency
+	measure 'Total Invoices' =
+			SUM ( Invoice[Amount] )
+		formatString: #,##0.00
+		displayFolder: Invoices
+		lineageTag: f0000002-0m01-0000-0000-000000000001
+
+	/// Total invoice amount converted to TRY
+	measure 'Total Invoices TRY' =
+			SUMX (
+				Invoice,
+				Invoice[Amount] *
+				LOOKUPVALUE (
+					'Exchange Rate'[forex_selling],
+					'Exchange Rate'[base_currency], RELATED ( Currency[CurrencyCode] ),
+					'Exchange Rate'[date], RELATED ( 'Date'[Date] ),
+					1
+				)
+			)
+		formatString: ₺#,##0.00
+		displayFolder: Invoices
+		lineageTag: f0000002-0m02-0000-0000-000000000001
+
+	/// Outstanding invoices count
+	measure 'Outstanding Invoices' =
+			CALCULATE (
+				COUNTROWS ( Invoice ),
+				'Transaction Status'[StatusName] = "unpaid"
+			)
+		formatString: #,##0
+		displayFolder: Invoices
+		lineageTag: f0000002-0m03-0000-0000-000000000001
+
+	partition Invoice = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="invoice"]}[Data]
+				in
+				    Data

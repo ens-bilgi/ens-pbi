@@ -1,0 +1,72 @@
+table 'Exchange Rate'
+	lineageTag: d0000009-0000-0000-0000-000000000001
+
+	column date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: d0000009-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column base_currency
+		dataType: string
+		lineageTag: d0000009-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: base_currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column quote_currency
+		dataType: string
+		isHidden
+		lineageTag: d0000009-0003-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: quote_currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit
+		dataType: int64
+		isHidden
+		lineageTag: d0000009-0004-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column forex_buying
+		dataType: double
+		lineageTag: d0000009-0005-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: forex_buying
+
+		annotation SummarizationSetBy = Automatic
+
+	column forex_selling
+		dataType: double
+		lineageTag: d0000009-0006-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: forex_selling
+
+		annotation SummarizationSetBy = Automatic
+
+	column source
+		dataType: string
+		isHidden
+		lineageTag: d0000009-0007-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Exchange Rate' = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="exchange_rate"]}[Data]
+				in
+				    Data

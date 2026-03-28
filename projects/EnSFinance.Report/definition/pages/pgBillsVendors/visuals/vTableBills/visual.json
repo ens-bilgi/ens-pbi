@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vTableBills",
+  "position": { "x": 30, "y": 450, "z": 2000, "width": 1200, "height": 240, "tabOrder": 2 },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Vendor" } }, "Property": "VendorName" } }, "queryRef": "Vendor.VendorName", "nativeQueryRef": "VendorName" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Bill" } }, "Property": "BillNumber" } }, "queryRef": "Bill.BillNumber", "nativeQueryRef": "BillNumber" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Bill" } }, "Property": "Amount" } }, "queryRef": "Bill.Amount", "nativeQueryRef": "Amount" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Currency" } }, "Property": "CurrencyCode" } }, "queryRef": "Currency.CurrencyCode", "nativeQueryRef": "CurrencyCode" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Transaction Status" } }, "Property": "StatusName" } }, "queryRef": "Transaction Status.StatusName", "nativeQueryRef": "StatusName" }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "text": { "expr": { "Literal": { "Value": "'Bill Detail'" } } } } }]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
