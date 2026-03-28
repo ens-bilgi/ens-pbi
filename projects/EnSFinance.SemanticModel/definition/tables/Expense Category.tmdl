@@ -1,0 +1,30 @@
+table 'Expense Category'
+	lineageTag: d0000006-0000-0000-0000-000000000001
+
+	column CategoryKey
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: d0000006-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CategoryName
+		dataType: string
+		lineageTag: d0000006-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CategoryName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Expense Category' = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="expense_category"]}[Data]
+				in
+				    Data

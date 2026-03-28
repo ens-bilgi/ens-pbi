@@ -1,0 +1,74 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vTrendBills",
+  "position": {
+    "x": 30,
+    "y": 180,
+    "z": 2000,
+    "width": 740,
+    "height": 350,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": { "Entity": "Date" }
+                  },
+                  "Property": "MonthName"
+                }
+              },
+              "queryRef": "Date.MonthName",
+              "nativeQueryRef": "MonthName"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": { "Entity": "Bill" }
+                  },
+                  "Property": "Total Bills TRY"
+                }
+              },
+              "queryRef": "Bill.Total Bills TRY",
+              "nativeQueryRef": "Total Bills TRY"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": { "Entity": "Payment" }
+                  },
+                  "Property": "Total Outgoing TRY"
+                }
+              },
+              "queryRef": "Payment.Total Outgoing TRY",
+              "nativeQueryRef": "Total Outgoing TRY"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": { "expr": { "Literal": { "Value": "true" } } },
+            "text": { "expr": { "Literal": { "Value": "'Bills vs Payments Trend'" } } }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

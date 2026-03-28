@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vLineEUR",
+  "position": { "x": 650, "y": 30, "z": 1001, "width": 600, "height": 350, "tabOrder": 1 },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "fltEUR",
+        "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "base_currency" } },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [{ "Name": "e", "Entity": "Exchange Rate", "Type": 0 }],
+          "Where": [{ "Condition": { "In": { "Expressions": [{ "Column": { "Expression": { "SourceRef": { "Source": "e" } }, "Property": "base_currency" } }], "Values": [[{ "Literal": { "Value": "'EUR'" } }]] } } }]
+        }
+      }
+    ]
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "date" } }, "queryRef": "Exchange Rate.date", "nativeQueryRef": "date" }
+          ]
+        },
+        "Y": {
+          "projections": [
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "forex_selling" } }, "queryRef": "Exchange Rate.forex_selling", "nativeQueryRef": "forex_selling" }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "text": { "expr": { "Literal": { "Value": "'EUR/TRY Exchange Rate'" } } } } }]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

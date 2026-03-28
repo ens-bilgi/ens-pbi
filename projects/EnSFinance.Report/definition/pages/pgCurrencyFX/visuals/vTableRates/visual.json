@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vTableRates",
+  "position": { "x": 30, "y": 400, "z": 2000, "width": 1200, "height": 290, "tabOrder": 2 },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "date" } }, "queryRef": "Exchange Rate.date", "nativeQueryRef": "date" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "base_currency" } }, "queryRef": "Exchange Rate.base_currency", "nativeQueryRef": "base_currency" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "forex_buying" } }, "queryRef": "Exchange Rate.forex_buying", "nativeQueryRef": "forex_buying" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "forex_selling" } }, "queryRef": "Exchange Rate.forex_selling", "nativeQueryRef": "forex_selling" }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "date" } }, "direction": "Descending" }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "text": { "expr": { "Literal": { "Value": "'TCMB Exchange Rates'" } } } } }]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

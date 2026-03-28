@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.2.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY25SU11",
+      "reportVersionAtImport": {
+        "visual": "2.1.0",
+        "report": "3.0.0",
+        "page": "2.0.0"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "useEnhancedTooltips": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "exportDataMode": "AllowSummarized",
+    "allowChangeFilterTypes": true,
+    "useDefaultAggregateDisplayName": true
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY25SU11",
+          "path": "BaseThemes/CY25SU11.json",
+          "type": "BaseTheme"
+        }
+      ]
+    }
+  ]
+}

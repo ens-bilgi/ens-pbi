@@ -1,0 +1,38 @@
+table Currency
+	lineageTag: d0000004-0000-0000-0000-000000000001
+
+	column CurrencyKey
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: d0000004-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CurrencyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrencyCode
+		dataType: string
+		lineageTag: d0000004-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CurrencyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrencyName
+		dataType: string
+		lineageTag: d0000004-0003-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CurrencyName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Currency = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="currency"]}[Data]
+				in
+				    Data

@@ -2,6 +2,27 @@
 
 This project enables Claude to build Power BI dataflows, semantic models, and reports using modern text-based formats (PBIR, TMDL, PBIP) and deploy them to Fabric/Power BI Service.
 
+## Current Deployment
+
+**Workspace:** E&S Bilgi AI Dev (`c44d2ba3-a7ca-4d33-a7ef-8d2080dceefa`)
+
+| Item | Type | Notes |
+|---|---|---|
+| Bronze_EnSFinance | Notebook + Lakehouse | Ingests 7 tables from Neon PostgreSQL |
+| Silver_EnSFinance | Notebook + Lakehouse | Cleans/normalizes, Boyut vendor normalization |
+| Gold_EnSFinance | Notebook + Lakehouse | Star schema: 8 dims + 3 facts (receipt missing — needs more source data) |
+| TCMB_ExchangeRates | Notebook | Fetches 1 year of USD/TRY + EUR/TRY from TCMB REST API into Gold |
+| EnS Finance | SemanticModel | Import mode via Lakehouse SQL endpoint, 12 tables, DAX measures with TCMB FX conversion |
+| EnS Finance Report | Report | 4 pages: Executive Summary, Bills & Vendors, Payments, Currency & FX |
+
+**Pipeline order:** Bronze → Silver → Gold + TCMB (parallel) → Refresh semantic model
+
+**Known issues:**
+- `receipt` table not in Gold (only 1 source row; re-run Gold notebook when more data exists)
+- After redeploying semantic model via API, OAuth2 credentials must be re-bound in Settings > Data source credentials
+- DirectLake mode didn't work (OneLake permission issues); using Import mode via SQL endpoint instead
+- TCMB URL format: `https://www.tcmb.gov.tr/kurlar/YYYYMM/DDMMYYYY.xml` (4-digit year, not 2-digit)
+
 ## Architecture Overview
 
 ```
@@ -82,12 +103,23 @@ uv run pbir-utils validate projects/<name>.Report/
 
 ### Step 5: Deploy
 
-Option A — **fabric-cicd** (API deployment):
+Option A — **Fabric REST API** (direct deployment, used for EnS Finance):
+```python
+# Create: POST /v1/workspaces/{ws}/semanticModels with TMDL parts
+# Update: POST /v1/workspaces/{ws}/semanticModels/{id}/updateDefinition
+# Report: POST /v1/workspaces/{ws}/reports with PBIR parts
+# All operations are async (202) — poll the Location header URL until Succeeded
+```
+
+Required parts for semantic model: `definition.pbism` + `definition/*.tmdl` + `definition/tables/*.tmdl`
+Required parts for report: `definition.pbir` + `definition/version.json` + `definition/report.json` + `definition/pages/pages.json` + page/visual JSON files
+
+Option B — **fabric-cicd** (API deployment):
 ```bash
 uv run python scripts/deploy.py --project projects/<name> --workspace <workspace-id>
 ```
 
-Option B — **Git integration** (commit-based deployment, requires paid Fabric capacity):
+Option C — **Git integration** (commit-based deployment, requires paid Fabric capacity):
 ```bash
 git add projects/<name>
 git commit -m "Add <name> report"
@@ -95,7 +127,7 @@ git push
 # Fabric Git sync picks up changes automatically
 ```
 
-**Note:** GitHub Git sync requires paid Fabric capacity (F2+). On a trial, use Option A. See `docs/azure-setup.md` Step 8 for details.
+**Note:** GitHub Git sync requires paid Fabric capacity (F2+). On a trial, use Option A or B. See `docs/azure-setup.md` Step 8 for details.
 
 ## Available MCP Servers
 

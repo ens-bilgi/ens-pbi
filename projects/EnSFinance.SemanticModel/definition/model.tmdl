@@ -1,0 +1,40 @@
+model Model
+	culture: tr-TR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+
+ref table Date
+ref table Vendor
+ref table Client
+ref table Currency
+ref table 'Payment Method'
+ref table 'Expense Category'
+ref table User
+ref table 'Transaction Status'
+ref table Bill
+ref table Invoice
+ref table Payment
+ref table 'Exchange Rate'
+
+queryGroup Tables
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Parameters
+
+	annotation PBI_QueryGroupOrder = 1
+
+expression SqlEndpoint = "yefhjjsocikuzfz43qntrrwuhq-umvu3rgku4zu3j7pruqibxho7i.datawarehouse.fabric.microsoft.com" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: e0000001-0000-0000-0000-000000000001
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+	annotation PBI_ResultType = Text
+
+expression Database = "Gold_EnSFinance" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: e0000002-0000-0000-0000-000000000001
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+	annotation PBI_ResultType = Text

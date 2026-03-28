@@ -1,0 +1,174 @@
+table Bill
+	lineageTag: f0000001-0000-0000-0000-000000000001
+
+	column BillId
+		dataType: string
+		isHidden
+		isKey
+		lineageTag: f0000001-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: BillId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000001-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DueDateKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000001-0003-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: DueDateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendorKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000001-0004-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: VendorKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrencyKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000001-0005-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CurrencyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusKey
+		dataType: int64
+		isHidden
+		lineageTag: f0000001-0006-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: StatusKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column BillNumber
+		dataType: string
+		lineageTag: f0000001-0007-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: BillNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: f0000001-0008-0000-0000-000000000001
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column VATRate
+		dataType: double
+		formatString: 0.00%
+		lineageTag: f0000001-0009-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: VATRate
+
+		annotation SummarizationSetBy = Automatic
+
+	column VATAmount
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: f0000001-000a-0000-0000-000000000001
+		summarizeBy: sum
+		sourceColumn: VATAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Notes
+		dataType: string
+		isHidden
+		lineageTag: f0000001-000b-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: Notes
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		isHidden
+		lineageTag: f0000001-000c-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Total bill amount in original currency
+	measure 'Total Bills' =
+			SUM ( Bill[Amount] )
+		formatString: #,##0.00
+		displayFolder: Bills
+		lineageTag: f0000001-0m01-0000-0000-000000000001
+
+	/// Total bill amount converted to TRY via TCMB selling rate
+	measure 'Total Bills TRY' =
+			SUMX (
+				Bill,
+				Bill[Amount] *
+				LOOKUPVALUE (
+					'Exchange Rate'[forex_selling],
+					'Exchange Rate'[base_currency], RELATED ( Currency[CurrencyCode] ),
+					'Exchange Rate'[date], RELATED ( 'Date'[Date] ),
+					1
+				)
+			)
+		formatString: ₺#,##0.00
+		displayFolder: Bills
+		lineageTag: f0000001-0m02-0000-0000-000000000001
+
+	/// Count of bills with unpaid status
+	measure 'Outstanding Bills' =
+			CALCULATE (
+				COUNTROWS ( Bill ),
+				'Transaction Status'[StatusName] = "unpaid"
+			)
+		formatString: #,##0
+		displayFolder: Bills
+		lineageTag: f0000001-0m03-0000-0000-000000000001
+
+	/// Total VAT liability on bills
+	measure 'Total Bill VAT' =
+			SUM ( Bill[VATAmount] )
+		formatString: #,##0.00
+		displayFolder: Bills
+		lineageTag: f0000001-0m04-0000-0000-000000000001
+
+	/// Net bill amount (excl. VAT)
+	measure 'Net Bills' =
+			[Total Bills] - [Total Bill VAT]
+		formatString: #,##0.00
+		displayFolder: Bills
+		lineageTag: f0000001-0m05-0000-0000-000000000001
+
+	/// Year-to-date bill total in TRY
+	measure 'YTD Bills TRY' =
+			TOTALYTD ( [Total Bills TRY], 'Date'[Date] )
+		formatString: ₺#,##0.00
+		displayFolder: Bills
+		lineageTag: f0000001-0m06-0000-0000-000000000001
+
+	partition Bill = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="bill"]}[Data]
+				in
+				    Data

@@ -1,0 +1,30 @@
+table Client
+	lineageTag: d0000003-0000-0000-0000-000000000001
+
+	column ClientKey
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: d0000003-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: ClientKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientName
+		dataType: string
+		lineageTag: d0000003-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: ClientName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Client = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="client"]}[Data]
+				in
+				    Data

@@ -1,0 +1,30 @@
+table Vendor
+	lineageTag: d0000002-0000-0000-0000-000000000001
+
+	column VendorKey
+		dataType: int64
+		isHidden
+		isKey
+		lineageTag: d0000002-0001-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: VendorKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column VendorName
+		dataType: string
+		lineageTag: d0000002-0002-0000-0000-000000000001
+		summarizeBy: none
+		sourceColumn: VendorName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Vendor = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="vendor"]}[Data]
+				in
+				    Data

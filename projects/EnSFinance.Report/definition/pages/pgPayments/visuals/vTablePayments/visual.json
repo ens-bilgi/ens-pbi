@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vTablePayments",
+  "position": { "x": 30, "y": 450, "z": 2000, "width": 1200, "height": 240, "tabOrder": 2 },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Date" } }, "Property": "Date" } }, "queryRef": "Date.Date", "nativeQueryRef": "Date" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Payment" } }, "Property": "Amount" } }, "queryRef": "Payment.Amount", "nativeQueryRef": "Amount" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Currency" } }, "Property": "CurrencyCode" } }, "queryRef": "Currency.CurrencyCode", "nativeQueryRef": "CurrencyCode" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Payment Method" } }, "Property": "PaymentMethod" } }, "queryRef": "Payment Method.PaymentMethod", "nativeQueryRef": "PaymentMethod" },
+            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Payment" } }, "Property": "Direction" } }, "queryRef": "Payment.Direction", "nativeQueryRef": "Direction" }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "text": { "expr": { "Literal": { "Value": "'Payment Detail'" } } } } }]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

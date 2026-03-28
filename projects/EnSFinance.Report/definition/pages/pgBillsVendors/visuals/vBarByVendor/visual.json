@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "vBarByVendor",
+  "position": { "x": 30, "y": 30, "z": 1000, "width": 600, "height": 400, "tabOrder": 0 },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Vendor" } }, "Property": "VendorName" } },
+              "queryRef": "Vendor.VendorName", "nativeQueryRef": "VendorName"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "Bill" } }, "Property": "Total Bills TRY" } },
+              "queryRef": "Bill.Total Bills TRY", "nativeQueryRef": "Total Bills TRY"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [{ "properties": { "show": { "expr": { "Literal": { "Value": "true" } } }, "text": { "expr": { "Literal": { "Value": "'Bills by Vendor (TRY)'" } } } } }]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
