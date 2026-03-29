@@ -116,7 +116,14 @@ Required parts for report: `definition.pbir` + `definition/version.json` + `defi
 
 Option B — **fabric-cicd** (API deployment):
 ```bash
-uv run python scripts/deploy.py --project projects/<name> --workspace <workspace-id>
+# Workspace by ID
+uv run python scripts/deploy.py --project projects/<name> --workspace-id <workspace-id>
+
+# Or workspace by display name
+uv run python scripts/deploy.py --project projects/<name> --workspace-name "<name>"
+
+# Canonical CI/CD service principal mode (after `az login --service-principal ...`)
+uv run python scripts/deploy.py --project projects/<name> --workspace-id <workspace-id> --spn-auth
 ```
 
 Option C — **Git integration** (commit-based deployment, requires paid Fabric capacity):
