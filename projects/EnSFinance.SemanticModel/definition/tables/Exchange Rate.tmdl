@@ -61,6 +61,13 @@ table 'Exchange Rate'
 
 		annotation SummarizationSetBy = Automatic
 
+	/// TCMB selling rate (one value per date per currency)
+	measure 'Selling Rate' =
+			MAX ( 'Exchange Rate'[forex_selling] )
+		formatString: #,##0.0000
+		displayFolder: Rates
+		lineageTag: d0000009-0m01-0000-0000-000000000001
+
 	partition 'Exchange Rate' = m
 		mode: import
 		queryGroup: Tables

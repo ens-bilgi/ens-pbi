@@ -27,7 +27,7 @@
         },
         "Y": {
           "projections": [
-            { "field": { "Column": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "forex_selling" } }, "queryRef": "Exchange Rate.forex_selling", "nativeQueryRef": "forex_selling" }
+            { "field": { "Measure": { "Expression": { "SourceRef": { "Entity": "Exchange Rate" } }, "Property": "Selling Rate" } }, "queryRef": "Exchange Rate.Selling Rate", "nativeQueryRef": "Selling Rate" }
           ]
         }
       }
