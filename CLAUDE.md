@@ -2,6 +2,12 @@
 
 This project enables Claude to build Power BI dataflows, semantic models, and reports using modern text-based formats (PBIR, TMDL, PBIP) and deploy them to Fabric/Power BI Service.
 
+## Work tracking
+
+Forward scope lives in the **Project - PBI Platform** ClickUp list: `901817472504` — https://app.clickup.com/901817472504.
+
+Follow the ClickUp conventions in the user-level `~/.claude/CLAUDE.md` (section "ClickUp as source of truth for forward work"). Shipped work remains recorded in git/PR history.
+
 ## Current Deployment
 
 **Workspace:** E&S Bilgi AI Dev (`c44d2ba3-a7ca-4d33-a7ef-8d2080dceefa`)
