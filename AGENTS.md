@@ -1,12 +1,10 @@
-# Power BI + Fabric Development with Claude Code
+# Power BI + Fabric Development
 
-This project enables Claude to build Power BI dataflows, semantic models, and reports using modern text-based formats (PBIR, TMDL, PBIP) and deploy them to Fabric/Power BI Service.
+This project enables AI-assisted development of Power BI dataflows, semantic models, and reports using modern text-based formats (PBIR, TMDL, PBIP) and deploys them to Fabric/Power BI Service.
 
 ## Work tracking
 
 Forward scope lives in the **Project - PBI Platform** ClickUp list: `901817472504` — https://app.clickup.com/901817472504.
-
-Follow the ClickUp conventions in the user-level `~/.claude/CLAUDE.md` (section "ClickUp as source of truth for forward work"). Shipped work remains recorded in git/PR history.
 
 ## Current Deployment
 
@@ -33,9 +31,9 @@ Follow the ClickUp conventions in the user-level `~/.claude/CLAUDE.md` (section 
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  Claude Code                                            │
+│  AI Coding Assistant                                    │
 │  ┌───────────────┐  ┌──────────────┐  ┌──────────────┐ │
-│  │ Fabric MCP    │  │ Skills       │  │ fabric-cicd  │ │
+│  │ Fabric API    │  │ Skills       │  │ fabric-cicd  │ │
 │  │ (workspaces,  │  │ (PBIR report │  │ (deploy PBIP │ │
 │  │  items, Git)  │  │  builder,    │  │  to workspace│ │
 │  │               │  │  TMDL, etc.) │  │  via API)    │ │
@@ -67,7 +65,7 @@ The user must:
 
 Alternatively, use the Fabric REST API to create items and download their definitions.
 
-### Step 2: Add/Edit Semantic Model (Claude)
+### Step 2: Add/Edit Semantic Model
 
 Use the **TMDL skill** or **Power BI Modeling MCP** to:
 - Add tables with columns and data types
@@ -89,7 +87,7 @@ definition/
 
 Reference: `skills/power-bi-agentic-development/plugins/pbip/skills/tmdl/SKILL.md`
 
-### Step 3: Add Report Pages & Visuals (Claude)
+### Step 3: Add Report Pages & Visuals
 
 Use the **PBIR Report Builder skill** to write PBIR JSON files:
 - Create page folders in `projects/<name>.Report/definition/pages/`
@@ -142,21 +140,6 @@ git push
 
 **Note:** GitHub Git sync requires paid Fabric capacity (F2+). On a trial, use Option A or B. See `docs/azure-setup.md` Step 8 for details.
 
-## Available MCP Servers
-
-### Fabric MCP Server (`@microsoft/fabric-mcp`)
-Registered in `.mcp.json`. Provides access to Fabric REST APIs:
-- List/create/manage workspaces
-- List/create/manage items (semantic models, reports, dataflows, etc.)
-- Git integration operations
-- Job execution (refreshes, notebook runs)
-
-### Remote Power BI MCP (if enabled by admin)
-URL: `https://api.fabric.microsoft.com/v1/mcp/powerbi`
-- Execute DAX queries against deployed semantic models
-- Get model schemas
-- Natural language to DAX
-
 ## Available Skills
 
 ### From `skills/powerbi-claude-skills/`
@@ -189,7 +172,7 @@ URL: `https://api.fabric.microsoft.com/v1/mcp/powerbi`
 - Field binding patterns: `skills/powerbi-claude-skills/pbir-report-builder/references/field-references.md`
 - TMDL syntax & best practices: `skills/power-bi-agentic-development/plugins/pbip/skills/tmdl/SKILL.md`
 - PBIR structure reference: `skills/power-bi-agentic-development/plugins/pbip/skills/pbir-format/SKILL.md`
-- Fabric CLI authentication: `skills/skills-for-fabric/CLAUDE.md`
+- Fabric CLI authentication: `skills/skills-for-fabric/AGENTS.md`
 
 ## Environment Variables
 
@@ -210,4 +193,4 @@ Power BI Desktop is Windows-only. On macOS, create initial PBIP projects via:
 3. The `powerbi-authoring-cli` skill (uses `az rest`)
 4. A Windows VM or remote machine
 
-Claude can then add pages, visuals, and measures to the downloaded PBIP structure.
+The AI coding assistant can then add pages, visuals, and measures to the downloaded PBIP structure.
