@@ -1,0 +1,61 @@
+table Fact_Nakit
+	lineageTag: 3dcec442-8a5a-4de5-ad9b-ef90d01d3c63
+
+	column Date
+		dataType: dateTime
+		lineageTag: 9fa91a8f-a15c-4ffc-86b7-7e509f1671c5
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column CashTRY
+		dataType: double
+		lineageTag: 177c8436-7d65-445e-a76f-e5d6ae99e50f
+		summarizeBy: sum
+		sourceColumn: CashTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreditLineLimitTRY
+		dataType: double
+		lineageTag: 69926973-4e5d-4978-8bf6-ac7795688652
+		summarizeBy: sum
+		sourceColumn: CreditLineLimitTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreditUsedTRY
+		dataType: double
+		lineageTag: 9693e2cd-2430-4b94-be8a-45057f7ecaca
+		summarizeBy: sum
+		sourceColumn: CreditUsedTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreditAvailableTRY
+		dataType: double
+		lineageTag: 105a509b-e121-4f46-a218-d35f97b9b97f
+		summarizeBy: sum
+		sourceColumn: CreditAvailableTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column NetCashTRY
+		dataType: double
+		lineageTag: 223fa687-becd-4058-9c8d-e2d948c63e99
+		summarizeBy: sum
+		sourceColumn: NetCashTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Nakit = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="fact_cash"]}[Data]
+				in
+				    Data
+

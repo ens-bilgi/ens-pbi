@@ -1,0 +1,45 @@
+table Fact_Stok
+	lineageTag: 281ace41-b49c-45e5-834e-09eb8a379860
+
+	column Date
+		dataType: dateTime
+		lineageTag: 80410766-3ac5-4f8f-996c-dae6e4084e14
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: string
+		lineageTag: 8aa22d75-ab98-4919-afbf-9734c4e77ce1
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnHandQty
+		dataType: int64
+		lineageTag: d0c23d41-b495-428c-a437-7d25325f6fc0
+		summarizeBy: sum
+		sourceColumn: OnHandQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column InventoryValueTRY
+		dataType: double
+		lineageTag: f23630ee-05e6-4398-aa67-20192a782bbd
+		summarizeBy: sum
+		sourceColumn: InventoryValueTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Stok = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="fact_inventory"]}[Data]
+				in
+				    Data
+

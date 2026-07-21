@@ -1,0 +1,69 @@
+table Dim_Tedarikci
+	lineageTag: cd3d725e-21ca-4f88-b32a-e94ce9d829e8
+
+	column SupplierKey
+		dataType: string
+		lineageTag: 7772056b-f739-426e-8c00-eee8432e8af6
+		summarizeBy: none
+		sourceColumn: SupplierKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierName
+		dataType: string
+		lineageTag: 1a5da81d-76b1-43e0-8cb4-e144b992344c
+		summarizeBy: none
+		sourceColumn: SupplierName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 1eb16b2a-a0cd-449e-9e93-e44e53ef732c
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: dd293207-6d48-464d-8259-119763f55e3f
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentTermsDays
+		dataType: int64
+		lineageTag: 31e1ab8b-5c05-4c6a-b160-17db6995ba6d
+		summarizeBy: none
+		sourceColumn: PaymentTermsDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column Currency
+		dataType: string
+		lineageTag: 315617ea-8acd-4592-9b9f-52c51c8c10b6
+		summarizeBy: none
+		sourceColumn: Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsStrategic
+		dataType: int64
+		lineageTag: 81e46a43-844e-4f62-97c1-0b69935ea43e
+		summarizeBy: none
+		sourceColumn: IsStrategic
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Tedarikci = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="dim_supplier"]}[Data]
+				in
+				    Data
+

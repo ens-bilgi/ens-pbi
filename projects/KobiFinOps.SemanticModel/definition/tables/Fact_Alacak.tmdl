@@ -1,0 +1,69 @@
+table Fact_Alacak
+	lineageTag: 3ac5054f-d50f-4c9c-825e-8701da0c17f3
+
+	column Date
+		dataType: dateTime
+		lineageTag: 52e63f74-4d76-4da9-b1b7-ee9abba3df38
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: string
+		lineageTag: 22c92058-c6b3-44d1-86a8-5a50d8a11e35
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bucket_0_30
+		dataType: string
+		lineageTag: 598a641b-f901-4f7f-adff-19786d5f977e
+		summarizeBy: none
+		sourceColumn: Bucket_0_30
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bucket_31_60
+		dataType: string
+		lineageTag: 50b34567-19a6-406b-8422-7c95b5b118f6
+		summarizeBy: none
+		sourceColumn: Bucket_31_60
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bucket_61_90
+		dataType: string
+		lineageTag: 58585311-71d8-4f05-92e7-d48d945f8844
+		summarizeBy: none
+		sourceColumn: Bucket_61_90
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bucket_90_Plus
+		dataType: string
+		lineageTag: 6fd59a52-f878-4fc9-9ff0-15dafaaca520
+		summarizeBy: none
+		sourceColumn: Bucket_90_Plus
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalARTRY
+		dataType: double
+		lineageTag: d605892a-c5cb-49a7-a85c-62eef2dae648
+		summarizeBy: sum
+		sourceColumn: TotalARTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Alacak = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="fact_ar_aging"]}[Data]
+				in
+				    Data
+

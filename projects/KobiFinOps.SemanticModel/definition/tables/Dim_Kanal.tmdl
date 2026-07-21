@@ -1,0 +1,37 @@
+table Dim_Kanal
+	lineageTag: 1eb8145b-1344-44de-8434-692dc2532c67
+
+	column ChannelKey
+		dataType: string
+		lineageTag: 842176ad-77b5-4a85-975b-64a093436d1e
+		summarizeBy: none
+		sourceColumn: ChannelKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelName
+		dataType: string
+		lineageTag: 453a0944-0a92-4011-ac9b-8cb489541d97
+		summarizeBy: none
+		sourceColumn: ChannelName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelGroup
+		dataType: string
+		lineageTag: f7f1ee76-df33-470c-96cd-c16f4a9f8e8f
+		summarizeBy: none
+		sourceColumn: ChannelGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Kanal = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="dim_channel"]}[Data]
+				in
+				    Data
+

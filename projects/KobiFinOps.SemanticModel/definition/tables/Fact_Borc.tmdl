@@ -1,0 +1,77 @@
+table Fact_Borc
+	lineageTag: 217d3546-86da-42e9-a0ba-2951ab0410e6
+
+	column Date
+		dataType: dateTime
+		lineageTag: daeac974-6b0a-4519-85d5-62a9e59e0e1e
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierKey
+		dataType: string
+		lineageTag: ecc24201-4460-4d93-9dc4-da0cf1444ccf
+		summarizeBy: none
+		sourceColumn: SupplierKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bucket_0_30
+		dataType: string
+		lineageTag: 231868cc-3ad5-4a14-8838-741927959c56
+		summarizeBy: none
+		sourceColumn: Bucket_0_30
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bucket_31_60
+		dataType: string
+		lineageTag: 5ad4de99-ecc4-4a53-84f3-428ffa37bedf
+		summarizeBy: none
+		sourceColumn: Bucket_31_60
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bucket_61_90
+		dataType: string
+		lineageTag: 2ca86e36-fedb-4a6b-a17f-2b2f11c99251
+		summarizeBy: none
+		sourceColumn: Bucket_61_90
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bucket_90_Plus
+		dataType: string
+		lineageTag: 2e15e7d9-85d7-4404-8904-9523fe8bbee6
+		summarizeBy: none
+		sourceColumn: Bucket_90_Plus
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalAPTRY
+		dataType: double
+		lineageTag: 83121618-0ca8-4f7d-9223-4aefdfa8863c
+		summarizeBy: sum
+		sourceColumn: TotalAPTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column Currency
+		dataType: string
+		lineageTag: 965acc70-4f90-4442-95b8-6c1729db0836
+		summarizeBy: none
+		sourceColumn: Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Borc = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="fact_ap_aging"]}[Data]
+				in
+				    Data
+

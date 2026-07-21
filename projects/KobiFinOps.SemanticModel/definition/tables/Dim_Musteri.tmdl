@@ -1,0 +1,61 @@
+table Dim_Musteri
+	lineageTag: 965c6263-be46-4318-b8f7-65f6573953be
+
+	column CustomerKey
+		dataType: string
+		lineageTag: 38fe6336-8434-4042-870f-f1aea250ee4e
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerName
+		dataType: string
+		lineageTag: 4e605a07-fbbb-42a2-ad2d-8742f0b61274
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: 0b854c22-a80e-40ad-90ab-0e642ea2fd5a
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 67ec504b-ed84-4af5-8e3d-e2a8e4a91fb9
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentTermsDays
+		dataType: int64
+		lineageTag: 086d8f6c-daac-4666-a983-75ba95d345fa
+		summarizeBy: none
+		sourceColumn: PaymentTermsDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsStrategic
+		dataType: int64
+		lineageTag: e00bf954-5aba-4b19-97c2-37f7f886c9cd
+		summarizeBy: none
+		sourceColumn: IsStrategic
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Musteri = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="dim_customer"]}[Data]
+				in
+				    Data
+

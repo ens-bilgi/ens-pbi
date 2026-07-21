@@ -1,0 +1,45 @@
+table Fact_Tahmin
+	lineageTag: 48121ca7-7eba-403f-8f9f-c13f5b71c043
+
+	column Date
+		dataType: dateTime
+		lineageTag: b0581ee2-347d-418e-8207-9a857dd31cbe
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Family
+		dataType: string
+		lineageTag: 13b0dc23-4da7-4828-90a8-496ef92475a7
+		summarizeBy: none
+		sourceColumn: Family
+
+		annotation SummarizationSetBy = Automatic
+
+	column ForecastRevenueTRY
+		dataType: double
+		lineageTag: b8740ebc-b636-4d00-b67a-070387b37653
+		summarizeBy: sum
+		sourceColumn: ForecastRevenueTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: b06408ed-db1d-49a0-bc45-4b8afe9f3061
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Tahmin = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="fact_forecast"]}[Data]
+				in
+				    Data
+

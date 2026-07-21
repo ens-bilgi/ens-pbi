@@ -21,18 +21,19 @@ Forward scope lives in the **Project - PBI Platform** ClickUp list: `90181747250
 
 **Pipeline order:** Bronze → Silver → Gold + TCMB (parallel) → Refresh semantic model
 
-### Planned — KOBI FinOps twin (Pack 1)
+### Planned — KOBI FinOps twin (Pack 1) — **in progress**
 
-Customer show-and-tell twin for `11_kobi_finops_reporting_demo` (Excel remains minute-one UI).
-
-| Item | Plan |
+| Item | Status |
 |---|---|
-| Lakehouse files | Upload `packs/food_safety_equipment_reseller/*.csv` → `Files/kobi_finops/pack1/` |
-| `KobiFinOps` SemanticModel | TMDL star + measures ported from Excel `DAX_Measures` |
-| `KobiFinOps` Report | 2–3 PBIR pages (Yönetim / Nakit / Karışım) |
-| Source plan | Sibling Learning repo docs: `docs/pbi_twin_en.md` |
+| Lakehouse `KobiFinOps` | **Done** — `c764024f-96e4-4e25-ad6d-fe432f7cefdb` |
+| Files `kobi_finops/pack1/*.csv` | **Done** — 17 CSVs uploaded + loaded as tables |
+| SemanticModel `KobiFinOps` | **Done scaffold/deploy** — `7b69172d-2c11-456b-8597-650bf54343f3` (credentials/refresh + Date types still needed — DAX returns null until bound) |
+| Report `KobiFinOps` | **Next** — PBIR Yönetim / Nakit / Karışım |
+| Scripts | `scripts/kobi_upload_pack.py`, `scripts/kobi_scaffold_model.py` |
+| Handoff | `docs/kobi_finops_next_agent.md` |
+| Source plan | Learning `docs/pbi_twin_en.md` |
 
-Bootstrap PBIP under `projects/KobiFinOps.*`. Prefer Tabular Editor BPA / C# skills + Fabric powerbi-authoring-cli; TMDL hand-edit last resort.
+**Next agent:** open this repo, run prompt in `docs/kobi_finops_next_agent.md`.
 
 **Known issues (EnS Finance):**
 - `receipt` table not in Gold (only 1 source row; re-run Gold notebook when more data exists)

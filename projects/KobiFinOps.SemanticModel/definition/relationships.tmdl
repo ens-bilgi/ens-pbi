@@ -1,0 +1,55 @@
+relationship r00000001-0000-0000-0000-000000000001
+	fromColumn: Fact_Satis.Date
+	toColumn: Dim_Takvim.Date
+
+relationship r00000002-0000-0000-0000-000000000001
+	fromColumn: Fact_Satis.ProductKey
+	toColumn: Dim_Urun.ProductKey
+
+relationship r00000003-0000-0000-0000-000000000001
+	fromColumn: Fact_Satis.CustomerKey
+	toColumn: Dim_Musteri.CustomerKey
+
+relationship r00000004-0000-0000-0000-000000000001
+	fromColumn: Fact_Satis.ChannelKey
+	toColumn: Dim_Kanal.ChannelKey
+
+relationship r00000005-0000-0000-0000-000000000001
+	fromColumn: Fact_Butce.Date
+	toColumn: Dim_Takvim.Date
+
+relationship r00000006-0000-0000-0000-000000000001
+	fromColumn: Fact_Butce.AccountKey
+	toColumn: Dim_Hesap.AccountKey
+
+relationship r00000007-0000-0000-0000-000000000001
+	fromColumn: Fact_Stok.Date
+	toColumn: Dim_Takvim.Date
+
+relationship r00000008-0000-0000-0000-000000000001
+	fromColumn: Fact_Stok.ProductKey
+	toColumn: Dim_Urun.ProductKey
+
+relationship r00000009-0000-0000-0000-000000000001
+	fromColumn: Fact_Alacak.Date
+	toColumn: Dim_Takvim.Date
+
+relationship r00000010-0000-0000-0000-000000000001
+	fromColumn: Fact_Alacak.CustomerKey
+	toColumn: Dim_Musteri.CustomerKey
+
+relationship r00000011-0000-0000-0000-000000000001
+	fromColumn: Fact_Borc.Date
+	toColumn: Dim_Takvim.Date
+
+relationship r00000012-0000-0000-0000-000000000001
+	fromColumn: Fact_Borc.SupplierKey
+	toColumn: Dim_Tedarikci.SupplierKey
+
+relationship r00000013-0000-0000-0000-000000000001
+	fromColumn: Fact_Nakit.Date
+	toColumn: Dim_Takvim.Date
+
+relationship r00000014-0000-0000-0000-000000000001
+	fromColumn: Fact_Tahmin.Date
+	toColumn: Dim_Takvim.Date

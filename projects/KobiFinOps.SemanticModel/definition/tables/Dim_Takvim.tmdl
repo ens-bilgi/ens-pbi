@@ -1,0 +1,89 @@
+table Dim_Takvim
+	dataCategory: Time
+	lineageTag: f424d793-a049-4257-a76e-4156a566a9fb
+
+	column Date
+		dataType: dateTime
+		isKey
+		lineageTag: a905f2e5-f27e-4597-b436-81678cc2f3b2
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+		annotation UnderlyingDateTimeDataType = Date
+
+
+	column Year
+		dataType: int64
+		lineageTag: 1e70bd32-4ae1-4884-960a-8af628616d7f
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		lineageTag: ab218ecd-9a92-474a-a1ce-cd7383bc1e42
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: string
+		lineageTag: 1c18e072-50f2-42fa-ae0d-f25813693f72
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNameTR
+		dataType: string
+		lineageTag: 1b3bf9f1-579f-4013-ba93-ecdb72a68efd
+		summarizeBy: none
+		sourceColumn: MonthNameTR
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsActual
+		dataType: int64
+		lineageTag: 6f6116d8-c66f-4b24-aa55-7b5d6f6d4d28
+		summarizeBy: none
+		sourceColumn: IsActual
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsForecast
+		dataType: int64
+		lineageTag: 3c211dee-d767-4830-a4da-39d262dc3944
+		summarizeBy: none
+		sourceColumn: IsForecast
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsYTD
+		dataType: int64
+		lineageTag: fc82795d-ca4e-4803-a622-a23fc77ecb7f
+		summarizeBy: none
+		sourceColumn: IsYTD
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortKey
+		dataType: int64
+		lineageTag: b8bed4cc-98af-4c86-bbd7-9c6f6ef90879
+		summarizeBy: none
+		sourceColumn: SortKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Takvim = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="dim_calendar"]}[Data]
+				in
+				    Data
+

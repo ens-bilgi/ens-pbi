@@ -1,0 +1,41 @@
+model Model
+	culture: tr-TR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+
+ref table Fact_Satis
+ref table Fact_Butce
+ref table Fact_Stok
+ref table Fact_Alacak
+ref table Fact_Borc
+ref table Fact_Nakit
+ref table Fact_Tahmin
+ref table Dim_Takvim
+ref table Dim_Urun
+ref table Dim_Musteri
+ref table Dim_Kanal
+ref table Dim_Tedarikci
+ref table Dim_Hesap
+
+queryGroup Tables
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Parameters
+
+	annotation PBI_QueryGroupOrder = 1
+
+expression SqlEndpoint = "yefhjjsocikuzfz43qntrrwuhq-umvu3rgku4zu3j7pruqibxho7i.datawarehouse.fabric.microsoft.com" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 42015800-c45a-4a56-ba39-a319da03252a
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+	annotation PBI_ResultType = Text
+
+expression Database = "KobiFinOps" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 1211ea45-473a-4d77-b1dd-4306519e9455
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+	annotation PBI_ResultType = Text

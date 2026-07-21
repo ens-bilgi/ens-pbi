@@ -1,0 +1,45 @@
+table Dim_Hesap
+	lineageTag: 20b60c4e-19bd-47e1-a889-044f2da63f15
+
+	column AccountKey
+		dataType: string
+		lineageTag: a799e49f-5eb2-4a58-a837-68385da158e7
+		summarizeBy: none
+		sourceColumn: AccountKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountName
+		dataType: string
+		lineageTag: 0e5ef137-a7c0-4ab5-8484-a3e903d7a29d
+		summarizeBy: none
+		sourceColumn: AccountName
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountType
+		dataType: string
+		lineageTag: 4e2d205e-122f-455e-ac42-ec98c7cb3014
+		summarizeBy: none
+		sourceColumn: AccountType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		dataType: int64
+		lineageTag: b2593614-1a58-42e4-9164-337e2e5ac129
+		summarizeBy: none
+		sourceColumn: Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Hesap = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="dim_account"]}[Data]
+				in
+				    Data
+

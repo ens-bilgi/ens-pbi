@@ -1,0 +1,77 @@
+table Dim_Urun
+	lineageTag: 623e0eb1-016a-4995-9cb4-d27dbebdf58d
+
+	column ProductKey
+		dataType: string
+		lineageTag: 6b47ac74-9d40-4e73-ac40-489460e3d3ed
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: f12d67d8-343b-4ce9-b246-d4bc7492b553
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Family
+		dataType: string
+		lineageTag: 518a27c9-c70f-40e8-ad4a-5d4ffb7f295e
+		summarizeBy: none
+		sourceColumn: Family
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubFamily
+		dataType: string
+		lineageTag: 49e1f5a6-602b-45f2-b01e-e8bf8b1eddcc
+		summarizeBy: none
+		sourceColumn: SubFamily
+
+		annotation SummarizationSetBy = Automatic
+
+	column TargetMargin
+		dataType: double
+		lineageTag: 785c9dee-8289-4159-a85a-3ba4a2b78214
+		summarizeBy: none
+		sourceColumn: TargetMargin
+
+		annotation SummarizationSetBy = Automatic
+
+	column ListPriceTRY
+		dataType: double
+		lineageTag: d3ba0dd5-6c63-4a51-a4d0-41be55afc561
+		summarizeBy: sum
+		sourceColumn: ListPriceTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column ABC
+		dataType: string
+		lineageTag: 8908149f-aa5e-4bbf-b9f6-dc80c7e37af8
+		summarizeBy: none
+		sourceColumn: ABC
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsAttachEligible
+		dataType: int64
+		lineageTag: c67726ce-f915-4b01-84f5-ed9e03dbdf92
+		summarizeBy: none
+		sourceColumn: IsAttachEligible
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Urun = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="dim_product"]}[Data]
+				in
+				    Data
+

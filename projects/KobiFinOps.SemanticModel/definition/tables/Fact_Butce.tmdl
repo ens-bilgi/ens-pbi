@@ -1,0 +1,45 @@
+table Fact_Butce
+	lineageTag: 1fce3257-6701-4026-83ba-9c660d04cd6e
+
+	column Date
+		dataType: dateTime
+		lineageTag: f1bfedd6-0e09-4f40-adfc-e2e8d7844a15
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountKey
+		dataType: string
+		lineageTag: ea73adb2-0e82-44c3-9fc0-f17169f1467f
+		summarizeBy: none
+		sourceColumn: AccountKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column AmountTRY
+		dataType: double
+		lineageTag: e73758e1-ecb9-4e51-a6e8-8d740392e07d
+		summarizeBy: sum
+		sourceColumn: AmountTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scenario
+		dataType: string
+		lineageTag: ab86cb33-a590-43da-ae4d-2a33b180e8ef
+		summarizeBy: none
+		sourceColumn: Scenario
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Butce = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="fact_budget"]}[Data]
+				in
+				    Data
+

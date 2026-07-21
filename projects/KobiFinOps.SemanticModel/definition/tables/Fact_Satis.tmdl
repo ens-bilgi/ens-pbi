@@ -1,0 +1,255 @@
+table Fact_Satis
+	lineageTag: 9d72b3e3-a39c-4e2c-84bb-74015e8631a7
+
+	column SaleId
+		dataType: string
+		lineageTag: 01258528-e33f-4de3-9040-ead45091b6c9
+		summarizeBy: none
+		sourceColumn: SaleId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		lineageTag: aa95b80c-ba44-4dce-8334-4c8e7329808a
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: string
+		lineageTag: 80b33234-b93f-47ce-b667-3b6cbcb102cb
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: string
+		lineageTag: 5173691b-301e-499a-9de5-57ce175e1f0b
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChannelKey
+		dataType: string
+		lineageTag: 1bb339ee-c2f7-43eb-926f-e2ec1afc0c9d
+		summarizeBy: none
+		sourceColumn: ChannelKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Qty
+		dataType: int64
+		lineageTag: 919964c5-c843-4a97-873e-80fc62107a8c
+		summarizeBy: sum
+		sourceColumn: Qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column RevenueTRY
+		dataType: double
+		lineageTag: e9e107be-f6e4-406d-bd6d-255e220a1b69
+		summarizeBy: sum
+		sourceColumn: RevenueTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column COGSTRY
+		dataType: double
+		lineageTag: 92a17641-f03e-4183-a6b7-8d96b4c314c0
+		summarizeBy: sum
+		sourceColumn: COGSTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrossProfitTRY
+		dataType: double
+		lineageTag: cf6bf406-7355-48e6-a117-597c26d3cae1
+		summarizeBy: sum
+		sourceColumn: GrossProfitTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	column KDVRate
+		dataType: double
+		lineageTag: 8f724f5d-9426-435a-bfc9-18e8bc89d015
+		summarizeBy: none
+		sourceColumn: KDVRate
+
+		annotation SummarizationSetBy = Automatic
+
+	column KDVAmountTRY
+		dataType: double
+		lineageTag: a2a91cb3-01b2-40de-a0a7-0aaf2d06ed73
+		summarizeBy: sum
+		sourceColumn: KDVAmountTRY
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ciro
+	measure Ciro =
+			SUM ( Fact_Satis[RevenueTRY] )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: fde1bdcc-710f-4c7d-a85e-7ea6b25cde6d
+
+	/// COGS
+	measure COGS =
+			SUM ( Fact_Satis[COGSTRY] )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 87328c6c-d557-4da4-b7fa-18e28f17879e
+
+	/// Brut Kar
+	measure 'Brut Kar' =
+			[Ciro] - [COGS]
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 12d193d3-98c5-4260-8fa0-589b2b0ca208
+
+	/// Brut Marj %
+	measure 'Brut Marj %' =
+			DIVIDE ( [Brut Kar], [Ciro] )
+		formatString: 0.0%
+		displayFolder: KPI
+		lineageTag: 625d1589-3205-4b64-9307-c0507c4f9b6f
+
+	/// Ciro YTD
+	measure 'Ciro YTD' =
+			TOTALYTD ( [Ciro], Dim_Takvim[Date] )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 67f35b79-7749-41f9-ac0d-099eb734d3bc
+
+	/// Ciro Onceki Ay
+	measure 'Ciro Onceki Ay' =
+			CALCULATE ( [Ciro], DATEADD ( Dim_Takvim[Date], -1, MONTH ) )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: b3285ab6-4627-4685-ab64-5e0d90b23473
+
+	/// Ciro MoM %
+	measure 'Ciro MoM %' =
+			DIVIDE ( [Ciro] - [Ciro Onceki Ay], [Ciro Onceki Ay] )
+		formatString: 0.0%
+		displayFolder: KPI
+		lineageTag: 7fe96512-89a3-4532-82d3-04d265dfbb3e
+
+	/// Ciro Butce
+	measure 'Ciro Butce' =
+			CALCULATE ( SUM ( Fact_Butce[AmountTRY] ), Fact_Butce[AccountKey] = "REV" )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: dc58908a-eef5-4a85-8822-42b179eaddeb
+
+	/// VTB Ciro
+	measure 'VTB Ciro' =
+			[Ciro] - [Ciro Butce]
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 0ab8b222-f260-4f69-abdb-4a26755805b9
+
+	/// VTB Ciro %
+	measure 'VTB Ciro %' =
+			DIVIDE ( [VTB Ciro], [Ciro Butce] )
+		formatString: 0.0%
+		displayFolder: KPI
+		lineageTag: e76d7849-1628-44a4-874a-e571941c7b58
+
+	/// Stok Tutari
+	measure 'Stok Tutari' =
+			SUM ( Fact_Stok[InventoryValueTRY] )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 50f2c675-6d98-497e-9ded-bf9859ba44e5
+
+	/// Alacak Toplam
+	measure 'Alacak Toplam' =
+			SUM ( Fact_Alacak[TotalARTRY] )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 75be4661-2994-4751-9ca0-8090f0413dba
+
+	/// DSO Proxy
+	measure 'DSO Proxy' =
+			DIVIDE ( [Alacak Toplam], DIVIDE ( [Ciro], 30 ) )
+		formatString: 0.0
+		displayFolder: KPI
+		lineageTag: 474eb5fb-f75e-49c5-8ed7-51c81b51bf50
+
+	/// Borc Toplam
+	measure 'Borc Toplam' =
+			SUM ( Fact_Borc[TotalAPTRY] )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 9d255a6b-5063-41c8-9fe5-2fa2c535ce28
+
+	/// DPO Proxy
+	measure 'DPO Proxy' =
+			DIVIDE ( [Borc Toplam], DIVIDE ( [COGS], 30 ) )
+		formatString: 0.0
+		displayFolder: KPI
+		lineageTag: 7ffa4283-14c1-4ce7-9d87-d6ee33833c47
+
+	/// DIO Proxy
+	measure 'DIO Proxy' =
+			DIVIDE ( [Stok Tutari], DIVIDE ( [COGS], 30 ) )
+		formatString: 0.0
+		displayFolder: KPI
+		lineageTag: 158a1e45-1aeb-463f-a0e2-723d7dfe4c3a
+
+	/// CCC
+	measure CCC =
+			[DSO Proxy] + [DIO Proxy] - [DPO Proxy]
+		formatString: 0.0
+		displayFolder: KPI
+		lineageTag: 9ecf6c7c-8e09-494c-83eb-294a5828fd20
+
+	/// NWC
+	measure NWC =
+			[Alacak Toplam] + [Stok Tutari] - [Borc Toplam]
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: c3c5bc85-8e58-4a96-9ead-87ad750ff266
+
+	/// Nakit
+	measure Nakit =
+			SUM ( Fact_Nakit[CashTRY] )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 49441f69-e0f8-4bf0-8970-0556bd7eb40a
+
+	/// Ciro Ekipman
+	measure 'Ciro Ekipman' =
+			CALCULATE ( [Ciro], Dim_Urun[Family] = "Ekipman" )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: ac4442e3-df0e-46e9-9dbf-6ac7e09c05db
+
+	/// Ciro Sarf
+	measure 'Ciro Sarf' =
+			CALCULATE ( [Ciro], Dim_Urun[Family] = "Sarf" )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 33620fec-e1be-44e9-a149-e3d9ea6efe75
+
+	/// Ciro Hizmet
+	measure 'Ciro Hizmet' =
+			CALCULATE ( [Ciro], Dim_Urun[Family] = "Hizmet" )
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 09c39809-d7cc-4ac7-89e5-f0b65c1bab94
+
+	partition Fact_Satis = m
+		mode: import
+		queryGroup: Tables
+		source =
+				let
+				    Source = Sql.Database(SqlEndpoint, Database),
+				    Data = Source{[Schema="dbo",Item="fact_sales"]}[Data]
+				in
+				    Data
+
