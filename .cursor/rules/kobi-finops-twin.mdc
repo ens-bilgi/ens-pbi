@@ -1,0 +1,21 @@
+---
+description: KOBI FinOps Pack 1 twin — CSV upload, TMDL/PBIR, Tabular Editor skills
+globs: projects/KobiFinOps*/**
+alwaysApply: false
+---
+
+# KobiFinOps twin (from KOBI Excel demo)
+
+When creating or editing `projects/KobiFinOps*`:
+
+1. Read sibling plan if available: Learning repo `11_kobi_finops_reporting_demo/docs/pbi_twin_en.md`.
+2. CSV SoT: that repo’s `packs/food_safety_equipment_reseller/*.csv` → Lakehouse `Files/kobi_finops/pack1/`.
+3. Before TMDL/PBIR edits, Read skills:
+   - `skills/power-bi-agentic-development/plugins/pbip/skills/tmdl/SKILL.md`
+   - `skills/powerbi-skills/pbir-report-builder/SKILL.md`
+   - `skills/power-bi-agentic-development/plugins/tabular-editor/skills/bpa-rules/SKILL.md`
+   - `skills/power-bi-agentic-development/plugins/tabular-editor/skills/c-sharp-scripting/SKILL.md`
+   - `skills/skills-for-fabric/skills/powerbi-authoring-cli/SKILL.md`
+4. Prefer Fabric MCP / TE CLI over hand-edited TMDL.
+5. Report labels: Turkish business language (no YTD/DSO/DPO/CCC on visuals).
+6. Excel Meeting xlsx remains the customer room default — this twin is stack proof / upsell.

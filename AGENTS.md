@@ -21,7 +21,20 @@ Forward scope lives in the **Project - PBI Platform** ClickUp list: `90181747250
 
 **Pipeline order:** Bronze → Silver → Gold + TCMB (parallel) → Refresh semantic model
 
-**Known issues:**
+### Planned — KOBI FinOps twin (Pack 1)
+
+Customer show-and-tell twin for `11_kobi_finops_reporting_demo` (Excel remains minute-one UI).
+
+| Item | Plan |
+|---|---|
+| Lakehouse files | Upload `packs/food_safety_equipment_reseller/*.csv` → `Files/kobi_finops/pack1/` |
+| `KobiFinOps` SemanticModel | TMDL star + measures ported from Excel `DAX_Measures` |
+| `KobiFinOps` Report | 2–3 PBIR pages (Yönetim / Nakit / Karışım) |
+| Source plan | Sibling Learning repo docs: `docs/pbi_twin_en.md` |
+
+Bootstrap PBIP under `projects/KobiFinOps.*`. Prefer Tabular Editor BPA / C# skills + Fabric powerbi-authoring-cli; TMDL hand-edit last resort.
+
+**Known issues (EnS Finance):**
 - `receipt` table not in Gold (only 1 source row; re-run Gold notebook when more data exists)
 - After redeploying semantic model via API, OAuth2 credentials must be re-bound in Settings > Data source credentials
 - DirectLake mode didn't work (OneLake permission issues); using Import mode via SQL endpoint instead
