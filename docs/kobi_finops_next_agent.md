@@ -13,7 +13,7 @@ You are continuing the KOBI FinOps Pack 1 Power BI twin (Phase E).
 - Excel Meeting show-and-tell stays minute-one; this twin is stack proof / upsell.
 - Pitch: “Bunu veya benzerini sizin için kuralım.”
 - Plan: Learning repo `11_kobi_finops_reporting_demo/docs/pbi_twin_en.md`
-- Build host: `/Users/eggs/Desktop/ens-bilgi-repo/ens-pbi` (this repo)
+- Build host: `/Users/eggs/Developer/ens-bilgi-repo/ens-pbi` (this repo)
 - Pack CSV SoT: `…/11_kobi_finops_reporting_demo/packs/food_safety_equipment_reseller/`
 - Workspace: E&S Bilgi AI Dev `c44d2ba3-a7ca-4d33-a7ef-8d2080dceefa`
 - Auth: ens-pbi/.env SPN (already works)
@@ -43,7 +43,7 @@ Prefer Fabric MCP / TE CLI over hand-edit TMDL when available.
 7. Do NOT replace Excel as room default; do NOT leave xlsx with prospects.
 
 ## Commands
-cd /Users/eggs/Desktop/ens-bilgi-repo/ens-pbi
+cd /Users/eggs/Developer/ens-bilgi-repo/ens-pbi
 # refresh data from Learning pack:
 python scripts/kobi_upload_pack.py
 # regenerate+redeploy model:
